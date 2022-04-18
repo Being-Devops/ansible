@@ -1,0 +1,12 @@
+Module types
+Core modules
+Extra modules
+Custom modules
+
+Ansible Documentation
+docs.ansible.com
+ansible-doc -l will show all modules currently installed.
+ansible-doc <module name> will provide specific information.
+ansible-doc -s <module name> will produce example codes that you can use in a
+playbook.
+
