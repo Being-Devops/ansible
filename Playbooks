@@ -1,7 +1,6 @@
-Playbooks are configuration files that include plays that instruct Ansible what it should do.
-Notice that the playbook can have one or multiple plays.
-It will always have one play. And a play consists of different tasks.
-And in these tasks, modules are called. And the module explains to Ansible which specific configuration to be managed or changed.
-Playbooks are written in the YAML format.
-A playbook, it is nice if it starts with three dashes. The three dashes in the beginning and the three dots at the end are here to make it possible to imbed the YAML code in
-something else. And then the YAML parts will easily recognize the code it needs to work with.
+ ###### Playbooks are configuration files that include plays that instruct Ansible what it should do.
+ ###### Notice that the playbook can have one or multiple plays.
+ ###### It will always have one play. And a play consists of different tasks. And in these tasks, modules are called. And the module explains to Ansible which specific configuration to be managed or changed.
+ ###### Playbooks are written in the YAML format.
+ ######  A playbook, it is nice if it starts with three dashes. The three dashes in the beginning and the three dots at the end are here to make it possible to imbed the YAML code in
+         something else. And then the YAML parts will easily recognize the code it needs to work with.
