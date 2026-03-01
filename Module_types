@@ -1,12 +1,34 @@
-Module types
-Core modules
-Extra modules
-Custom modules
+Ansible modules are the actual "tools" that do the heavy lifting in your playbooks. Instead of writing complex bash scripts to configure a server, you call a specific module designed to handle that exact task idempotently.
+		
+There are hundreds of modules, but they are generally categorized in two ways: by who maintains them and by what they do.
 
-Ansible Documentation
-docs.ansible.com
-ansible-doc -l will show all modules currently installed.
-ansible-doc <module name> will provide specific information.
-ansible-doc -s <module name> will produce example codes that you can use in a
-playbook.
-
+1. Module Types by Source (The Modern Architecture)
+Historically, all modules were bundled directly into Ansible. Today, they are separated into "Collections" to make updating them easier:
+* Core Modules (ansible.builtin): These are the fundamental modules maintained directly by the core Ansible team. They ship with Ansible by default and include essential tools like copy, template, command, and service.
+* Community Modules (community.* or vendor-specific): These are maintained by partner vendors or the open-source community. If you need to spin up a Pod using the kubernetes.core.k8s module or manage images with community.docker.docker_image, you are using community collections. You download these via Ansible Galaxy.
+* Custom Modules: If a module doesn't exist for a proprietary internal tool, you can write your own in Python (or any language that returns JSON) and use it just like a native module.  
+2. Module Types by Functionality
+When writing playbooks, you will usually group modules mentally by the sub-system they manage. Here are the most common functional categories with examples:
+A. System Modules
+These manage OS-level components, packages, and state.
+* dnf / yum: For managing packages on RHEL systems.
+* apt: For managing packages on Ubuntu/Debian systems.
+* service / systemd: To start, stop, or enable background daemons.
+* user / group: To manage OS user accounts and SSH keys.
+B. Command Modules
+These are used when no specific module exists for the task, allowing you to run raw commands.
+* command: Runs a command directly (secure, but doesn't support bash pipes | or redirects >).
+* shell: Runs the command through /bin/sh, allowing full shell operators.
+* script: Takes a local script (like a Bash or Python file) from your control node, copies it to the remote server, executes it, and then deletes it.
+C. File Modules
+Used to manipulate files and directories.
+* copy: Pushes a static file from the control node to the remote server.
+* template: Pushes a dynamic file (usually a .j2 Jinja2 file) where variables are replaced with actual values before the file lands on the server.
+* file: Manages properties like permissions, ownership, or creates symlinks and empty directories.
+* lineinfile: Ensures a specific line exists (or doesn't exist) inside a text file without overwriting the whole file.
+D. Cloud & Infrastructure Modules
+Used to provision and manage cloud resources or orchestration platforms, rather than just configuring the OS inside a VM.
+* amazon.aws.ec2_instance: To provision virtual machines.
+* kubernetes.core.k8s: To apply Kubernetes manifests directly from an Ansible playbook.
+E. Network Modules
+Unlike standard servers where Ansible installs Python to execute tasks, network switches (like Cisco or Juniper) don't have Python installed. Network modules (cisco.ios.ios_config, for example) run locally on the Ansible control node and communicate with the switch over SSH/CLI or REST APIs to push configurations.
