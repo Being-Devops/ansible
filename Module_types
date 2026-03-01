@@ -28,6 +28,13 @@ How to get them: Downloaded via Ansible Galaxy.
 
 What they are: Modules you write yourself (usually in Python) if a tool doesn't exist for your company's proprietary internal software.
 
+Module Types by FunctionalityWhen writing playbooks, you will usually group modules by the subsystem they manage. Here are the most common categories:CategoryWhat it doesCommon Examples🖥️ SystemManages OS-level components, packages, and background services.dnf / apt (Package managers)service / systemd (Daemons)user (Accounts)⌨️ CommandRuns raw commands when a specific module doesn't exist.command (Standard execution)shell (Supports bash pipes like |)script (Runs a local script remotely)📁 FileManipulates files, directories, and permissions.copy (Pushes static files)template (Pushes dynamic .j2 files)lineinfile (Edits a single text line)☁️ CloudProvisions and manages cloud resources and orchestration platforms.amazon.aws.ec2_instancegoogle.cloud.gcp_computekubernetes.core.k8s🌐 NetworkConfigures network switches/routers (Runs locally via API/SSH since switches lack Python).cisco.ios.ios_configjunipernetworks.junos.junos_config
 
 
+Category,Purpose,Most Used Modules
+💻 System,"Managing OS-level components, background services, and software packages.","dnf, yum, apt, service, systemd, user, group"
+⌨️ Command,Running raw shell commands when no specific module exists for the exact task.,"command (secure), shell (allows bash pipes |), script"
+📁 File,"Creating, modifying, or moving files and directories across servers.","copy (static), template (dynamic variables), file, lineinfile"
+☁️ Cloud,Provisioning and managing external cloud infrastructure and orchestration.,"amazon.aws.ec2_instance, kubernetes.core.k8s"
+🌐 Network,Pushing configurations to network switches/routers (runs locally on the control node).,"cisco.ios.ios_config, junipernetworks.junos.junos_config"
 
